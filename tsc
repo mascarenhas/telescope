@@ -1,5 +1,6 @@
 #!/usr/bin/env lua
-require 'luarocks.require'
+package.path = './?.lua;' .. package.path
+pcall(require, "luarocks.require")
 require 'telescope'
 pcall(require, "shake")
 
@@ -160,6 +161,7 @@ Options:
   -c      --luacov          Output a coverage file using Luacov (http://luacov.luaforge.net/)
           --load=<file>     Load a Lua file before executing command
           --name=<pattern>  Only run tests whose name matches a Lua string pattern
+          --shake           Use shake as the front-end for tests
 
   Callback options:
     --after=<function>        Run function given after each test

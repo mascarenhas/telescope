@@ -47,11 +47,11 @@ status_labels = {
 -- @name context_aliases
 -- @class table
 context_aliases = {"context", "describe", "spec"}
---- The default names for test blocks. It defaults to "test," "it", "expect" and
--- "should."
+--- The default names for test blocks. It defaults to "test," "it", "expect",
+-- "they" and "should."
 -- @name test_aliases
 -- @class table
-test_aliases    = {"test", "it", "expect", "should"}
+test_aliases    = {"test", "it", "expect", "should", "they"}
 
 --- The default names for "before" blocks. It defaults to "before" and "setup."
 -- The function in the before block will be run before each sibling test function
@@ -437,7 +437,7 @@ function test_report(contexts, results)
   local function add_divider()
     table.insert(buffer, string.rep(line_char, width))
   end
-
+  add_divider()
   for i, item in ipairs(contexts) do
     local ancestors = ancestors(i, contexts)
     previous_level = level or 0
@@ -446,7 +446,6 @@ function test_report(contexts, results)
     local name = truncate_string(item.name, width - status_format_len - 4 - #ancestors, '...')
     if previous_level ~= level and level == 0 then add_divider() end
     if item.context then
-      if level == 0 then add_divider() end
       table.insert(buffer, string.format(context_name_format, space() .. name .. ':'))
     elseif results[i] then
       table.insert(buffer, string.format(function_name_format, space() .. name) ..
